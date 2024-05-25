@@ -1,5 +1,15 @@
-import React from 'react'
-import { Helmet } from 'react-helmet'
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
+
+const AddRecipeContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    background-color: #c5bb00;
+    min-height: 100vh;
+    gap: 6rem;
+`;
+
 
 const AddRecipe = () => {
     return (
@@ -8,9 +18,9 @@ const AddRecipe = () => {
                 <title>HomeAid | Add recipe</title>
             </Helmet>
         
-            <div className="container">
-                    <div>AddRecipe</div>
-            </div>
+            <AddRecipeContainer className="container">
+                <div>add recipe</div>
+            </AddRecipeContainer>
         </>
     )
 }
