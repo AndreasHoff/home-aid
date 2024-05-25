@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "urlIdentifier": "chicken-alfredo",
+        "name": "Chicken Alfredo",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 1"
+    },
+    {
+        "id": 2,
+        "urlIdentifier": "curry-chicken",
+        "name": "Curry Chicken",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 2"
+    },
+    {
+        "id": 3,
+        "urlIdentifier": "beef-stew",
+        "name": "Beef Stew",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 3"
+    },
+    {
+        "id": 4,
+        "urlIdentifier": "ham-and-cheese-sandwich",
+        "name": "Ham and Cheese Sandwich",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 4"
+    },
+      {
+        "id": 5,
+        "urlIdentifier": "rice-and-beans",
+        "name": "Rice and Beans",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 1"
+    },
+    {
+        "id": 6,
+        "urlIdentifier": "potato-salad",
+        "name": "Potato Salad",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 2"
+    },
+    {
+        "id": 7,
+        "urlIdentifier": "soup-and-salad",
+        "name": "Soup and Salad",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 3"
+    },
+    {
+        "id": 8,
+        "urlIdentifier": "fish-and-chips",
+        "name": "Fish and Chips",
+        "ingredients": [
+            "ingredient 1",
+            "ingredient 2"
+        ],
+        "instructions": "Instructions for Recipe 4"
+    }
+]
