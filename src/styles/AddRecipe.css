@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+    justify-content: center;
+    background-color: #c5bb00;
+    min-height: 100vh;
+    gap: 6rem;
+}

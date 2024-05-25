@@ -31,6 +31,9 @@ const HelloFresh = () => {
         </Helmet>
 
         <div className="container">
+            <div className="add-recipe">
+                <Link className='button' to='/hello-fresh/add-recipe'>Add Recipe</Link>
+            </div>
             <div className='gallery'>
                 {recipes.map((recipe) => (
                     <Link key={recipe.id} to={`/hello-fresh/${recipe.urlIdentifier}`}>

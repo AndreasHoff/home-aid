@@ -32,18 +32,21 @@ const Recipe = () => {
 
     return (
         <>
-        <Helmet>
-            <title>HomeAid | {recipe.name}</title>
-        </Helmet>
-            <div>
-                <img src={images[recipe.id]} alt={recipe.name} />
-                <h1>{recipe.name}</h1>
-                <p>{recipe.instructions}</p>
-                <ul>
-                    {recipe.ingredients.map((ingredient, index) => (
-                        <li key={index}>{ingredient}</li>
-                    ))}
-                </ul>
+            <Helmet>
+                <title>HomeAid | {recipe.name}</title>
+            </Helmet>
+
+            <div className="container">
+                <div>
+                    <img src={images[recipe.id]} alt={recipe.name} />
+                    <h1>{recipe.name}</h1>
+                    <p>{recipe.instructions}</p>
+                    <ul>
+                        {recipe.ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </>
     );
