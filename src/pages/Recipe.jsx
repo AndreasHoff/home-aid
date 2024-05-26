@@ -14,6 +14,13 @@ import image8 from '../assets/images/8.png';
 import recipes from '../assets/recipes.json';
 
 const RecipeContainer = styled.div`
+
+    .no-sleep-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 1rem;
+    }
     display: flex;
     justify-content: center;
     background-color: #ffffff;
@@ -22,7 +29,64 @@ const RecipeContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
+    input[type="checkbox"] {
+        position: relative;
+        width: 120px;
+        height: 40px;
+        -webkit-appearance: none;
+        background: linear-gradient(0deg, #adadad, #848484);
+        outline: none;
+        border-radius: 20px;
+        box-shadow: 0 0 0 4px #8f8f8f, 0 0 0 5px #868686,
+            inset 0 0 10px rgba(0, 0, 0, 1), 0 5px 20px rgba(0, 0, 0, 0.5),
+            inset 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    input:checked[type="checkbox"] {
+        background: linear-gradient(0deg, #6ca740, #589f22);
+        box-shadow: 0 0 2px #6ca740, 0 0 0 4px #888888, 0 0 0 5px #a7a7a7,
+            inset 0 0 10px #888888, 0 5px 20px rgba(123, 123, 123, 0.5),
+            inset 0 0 15px rgba(131, 131, 131, 0.2);
+    }
+
+    input[type="checkbox"]:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 80px;
+        height: 40px;
+        background: linear-gradient(0deg, #929292, #6b6b6b);
+        border-radius: 20px;
+        box-shadow: 0 0 0 1px #767676;
+        transform: scale(0.98, 0.96);
+        transition: 0.5s;
+    }
+
+    input:checked[type="checkbox"]:before {
+        left: 40px;
+    }
+
+    input[type="checkbox"]:after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 2px);
+        left: 65px;
+        width: 4px;
+        height: 4px;
+        background: linear-gradient(0deg, #6b6b6b, #909090);
+        border-radius: 50%;
+        transition: 0.5s;
+    }
+
+    input:checked[type="checkbox"]:after {
+        background: #719d50;
+        left: 105px;
+        box-shadow: 0 0 5px #589f22, 0 0 15px #589f22;
+    }
+
     h3 {
+        color: #6ca740;
         margin-top: 0;
         margin-bottom: 0;
     }
@@ -102,12 +166,12 @@ const Recipe = () => {
     const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
 
     const toggleNoSleep = () => {
-        if (document.querySelector('button').textContent === 'Enable Wake Lock') {
+        if (document.querySelector('.no-sleep').textContent === 'Undgå at skærmen slukker') {
             noSleep.enable();
-            document.querySelector('button').textContent = 'Disable Wake Lock';
+            document.querySelector('.no-sleep').textContent = 'Skærm slukker ikke';
         } else {
             noSleep.disable();
-            document.querySelector('button').textContent = 'Enable Wake Lock';
+            document.querySelector('.no-sleep').textContent = 'Undgå at skærmen slukker';
         }
     };
 
@@ -122,8 +186,9 @@ const Recipe = () => {
             </Helmet>
 
             <RecipeContainer>
-                <div>
-                    <button onClick={toggleNoSleep}>Enable Wake Lock</button>
+                <div className='no-sleep-container'>
+                    <input type='checkbox' onClick={toggleNoSleep}></input>
+                    <p className='no-sleep'>Undgå at skærmen slukker</p>
                 </div>
                 <div className='recipe'>
                     <div className='left-column'>
