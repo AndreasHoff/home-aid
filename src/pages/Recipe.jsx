@@ -1,4 +1,5 @@
-import React from 'react';
+import NoSleep from 'nosleep.js';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -15,7 +16,7 @@ import recipes from '../assets/recipes.json';
 const RecipeContainer = styled.div`
     display: flex;
     justify-content: center;
-    background-color: #c5bb00;
+    background-color: #ffffff;
     min-height: 100vh;
     gap: 6rem;
     flex-direction: column;
@@ -58,11 +59,6 @@ const RecipeContainer = styled.div`
         }
     }
 
-    .recipe-image {
-        margin-top: 2rem;
-        width: 500px;
-    }
-
     .recipe {
         display: flex;
         margin: 0 2rem;
@@ -101,8 +97,19 @@ const images = {
 };
 
 const Recipe = () => {
+    const [noSleep, setNoSleep] = useState(new NoSleep());
     const { urlIdentifier } = useParams();
     const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
+
+    const toggleNoSleep = () => {
+        if (document.querySelector('button').textContent === 'Enable Wake Lock') {
+            noSleep.enable();
+            document.querySelector('button').textContent = 'Disable Wake Lock';
+        } else {
+            noSleep.disable();
+            document.querySelector('button').textContent = 'Enable Wake Lock';
+        }
+    };
 
     if (!recipe) {
         return <p>Recipe not found</p>;
@@ -116,7 +123,7 @@ const Recipe = () => {
 
             <RecipeContainer>
                 <div>
-                    <img className='recipe-image' src={images[recipe.id]} alt={recipe.name} />
+                    <button onClick={toggleNoSleep}>Enable Wake Lock</button>
                 </div>
                 <div className='recipe'>
                     <div className='left-column'>
