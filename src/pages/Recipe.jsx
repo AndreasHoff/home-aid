@@ -198,7 +198,7 @@ const Recipe = () => {
 
     useEffect(() => {
         fetchRecipes().then(recipes => {
-            console.log(recipes); // logs the array of recipes
+            console.log(recipes);
         });
     }, []);
 
