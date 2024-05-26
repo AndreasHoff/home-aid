@@ -1,3 +1,4 @@
+import { HelmetProvider } from 'react-helmet-async';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import './App.css';
 import MainLayout from './layouts/MainLayout';
@@ -19,7 +20,11 @@ const App = () => {
 
         )
     );
-    return <RouterProvider router={router} />
+    return (
+        <HelmetProvider>
+            <RouterProvider router={router} />
+        </HelmetProvider>
+    )
 }
 
 export default App

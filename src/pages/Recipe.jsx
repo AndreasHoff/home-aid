@@ -1,6 +1,6 @@
 import NoSleep from 'nosleep.js';
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import image1 from '../assets/images/1.png';
@@ -223,96 +223,100 @@ const Recipe = () => {
                         <div className='ingredients'>
                             <h3>Ingredienser</h3>
                             <table>
-                                <tr className='odd'>
-                                    <th></th>
-                                    <th>2 personer</th>
-                                    <th>4 personer</th>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Balsamico</td>
-                                    <td>12 ml</td>
-                                    <td>25 ml</td>
-                                </tr>
+                                <tbody>
+                                    <tr className='odd'>
+                                        <th></th>
+                                        <th>2 personer</th>
+                                        <th>4 personer</th>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Balsamico</td>
+                                        <td>12 ml</td>
+                                        <td>25 ml</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                         <div className='nutrition-facts'>
                             <h3>Næringsindhold</h3>
                             <table>
-                                <tr className='odd'>
-                                    <th></th>
-                                    <th>Pr. 100g</th>
-                                    <th>Pr. portion 365g</th>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Energi</td>
-                                    <td>659kj/157 kcal</td>
-                                    <td>2407 kj/575 kcal</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Fedt</td>
-                                    <td>5g</td>
-                                    <td>20g</td>
-                                </tr>
-                                <tr className='even'>
-                                    <td>Heraf mættet fedt</td>
-                                    <td>2g</td>
-                                    <td>4g</td>
-                                </tr>
-                                <tr className='odd'>
-                                    <td>Heraf sukkerarter</td>
-                                    <td>3g</td>
-                                    <td>6g</td>
-                                </tr>
+                                <tbody>
+                                    <tr className='odd'>
+                                        <th></th>
+                                        <th>Pr. 100g</th>
+                                        <th>Pr. portion 365g</th>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Energi</td>
+                                        <td>659kj/157 kcal</td>
+                                        <td>2407 kj/575 kcal</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Fedt</td>
+                                        <td>5g</td>
+                                        <td>20g</td>
+                                    </tr>
+                                    <tr className='even'>
+                                        <td>Heraf mættet fedt</td>
+                                        <td>2g</td>
+                                        <td>4g</td>
+                                    </tr>
+                                    <tr className='odd'>
+                                        <td>Heraf sukkerarter</td>
+                                        <td>3g</td>
+                                        <td>6g</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                         <div className='allergies'>

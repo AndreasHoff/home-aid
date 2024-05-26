@@ -1,6 +1,8 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import { addDoc, collection } from 'firebase/firestore';
+import React, { useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
+import db from '../firebase';
 
 const AddRecipeContainer = styled.div`
     display: flex;
@@ -12,6 +14,23 @@ const AddRecipeContainer = styled.div`
 
 
 const AddRecipe = () => {
+    const [kitchenUtensils, setKitchenUtensils] = useState('');
+    const formRef = useRef();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            await addDoc(collection(db, 'recipes'), { kitchenUtensils }); // Use this
+            setKitchenUtensils('');
+            formRef.current.reset();
+    
+            console.log('Recipe added successfully!');
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -19,7 +38,15 @@ const AddRecipe = () => {
             </Helmet>
         
             <AddRecipeContainer className="container">
-                <div>add recipe</div>
+            <form onSubmit={handleSubmit}>
+                    <input 
+                        type="text" 
+                        value={kitchenUtensils}
+                        onChange={e => setKitchenUtensils(e.target.value)} placeholder="Kitchen Utensils" 
+                        required 
+                    />
+                    <button type="submit">Add Recipe</button>
+                </form>
             </AddRecipeContainer>
         </>
     )
