@@ -13,10 +13,18 @@
         "id": 2,
         "urlIdentifier": "curry-chicken",
         "name": "Curry Chicken",
-        "ingredients": [
-            "ingredient 1",
-            "ingredient 2"
-        ],
+        "ingredients": {
+            "ingredient-one": [
+                "soja sauce",
+                "25 ml",
+                "50 ml"
+            ],
+            "ingredient-two": [
+                "soja sauce",
+                "25 ml",
+                "50 ml"
+            ]
+        },
         "instructions": "Instructions for Recipe 2"
     },
     {

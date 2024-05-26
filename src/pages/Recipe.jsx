@@ -1,5 +1,6 @@
+import { collection, getDocs } from 'firebase/firestore';
 import NoSleep from 'nosleep.js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,6 +13,7 @@ import image6 from '../assets/images/6.png';
 import image7 from '../assets/images/7.png';
 import image8 from '../assets/images/8.png';
 import recipes from '../assets/recipes.json';
+import { db } from '../firebase';
 
 const RecipeContainer = styled.div`
 
@@ -186,6 +188,19 @@ const Recipe = () => {
     const [noSleep, setNoSleep] = useState(new NoSleep());
     const { urlIdentifier } = useParams();
     const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
+
+    const fetchRecipes = async () => {
+        const recipesRef = collection(db, 'recipes');
+        const recipesSnapshot = await getDocs(recipesRef);
+        const recipesList = recipesSnapshot.docs.map(doc => doc.data());
+        return recipesList;
+    };
+
+    useEffect(() => {
+        fetchRecipes().then(recipes => {
+            console.log(recipes); // logs the array of recipes
+        });
+    }, []);
 
     const toggleNoSleep = () => {
         !noSleep.isEnabled ? noSleep.enable() : noSleep.disable();
