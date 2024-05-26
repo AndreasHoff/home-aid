@@ -21,11 +21,10 @@ const RecipeContainer = styled.div`
         align-items: center;
         row-gap: 1rem;
     }
+
     display: flex;
-    justify-content: center;
     background-color: #ffffff;
-    min-height: 100vh;
-    gap: 6rem;
+    margin: 2rem;
     flex-direction: column;
     align-items: center;
 
@@ -34,12 +33,17 @@ const RecipeContainer = styled.div`
         width: 120px;
         height: 40px;
         -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
         background: linear-gradient(0deg, #adadad, #848484);
         outline: none;
         border-radius: 20px;
-        box-shadow: 0 0 0 4px #8f8f8f, 0 0 0 5px #868686,
-            inset 0 0 10px rgba(0, 0, 0, 1), 0 5px 20px rgba(0, 0, 0, 0.5),
-            inset 0 0 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 
+            rgb(143, 143, 143) 0px 0px 0px 4px,
+            rgb(134, 134, 134) 0px 0px 0px 5px,
+            rgb(113 113 113) 0px 0px 10px inset,
+          rgba(0, 0, 0, 0.5) 0px 5px 20px, 
+          rgba(0, 0, 0, 0.2) 0px 0px 15px inset;
     }
 
     input:checked[type="checkbox"] {
@@ -115,7 +119,7 @@ const RecipeContainer = styled.div`
         }
 
         .odd {
-            background-color: #f0f0f0;
+            background-color: #a3cd8481
         }
 
         .even {
@@ -140,6 +144,24 @@ const RecipeContainer = styled.div`
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 3rem;
+
+            .image-with-number {
+                position: relative;
+            }
+
+            .number {
+                align-content: center;
+                text-align: center;
+                background-color: white;
+                color: #6ca740;
+                font-size: 1.5rem;
+                font-weight: 600;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 40px;
+                width: 40px;
+            }
 
             .step-image {
                 width: 100%;
@@ -166,13 +188,7 @@ const Recipe = () => {
     const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
 
     const toggleNoSleep = () => {
-        if (document.querySelector('.no-sleep').textContent === 'Undgå at skærmen slukker') {
-            noSleep.enable();
-            document.querySelector('.no-sleep').textContent = 'Skærm slukker ikke';
-        } else {
-            noSleep.disable();
-            document.querySelector('.no-sleep').textContent = 'Undgå at skærmen slukker';
-        }
+        !noSleep.isEnabled ? noSleep.enable() : noSleep.disable();
     };
 
     if (!recipe) {
@@ -195,6 +211,10 @@ const Recipe = () => {
                         <div className='lets-get-going'>
                             <h3>Lad os komme i gang</h3>
                             <p>Husk at vaske hænder i 20 sekunder før du starter. Skyl derefter grøntsager, frugter og urter. Glem ikke at vaske hænder og køkkenredskaber umiddelbart efter håndtering af råt kød og rå fisk</p>
+                        </div>
+                        <div className='kitchen-utensils'>
+                            <h3>Køkkenredskaber</h3>
+                            <p>Stegepande, gryde og skærebræt</p>
                         </div>
                         <div className='colonial-goods'>
                             <h3>Kolonialvarer</h3>
@@ -302,7 +322,10 @@ const Recipe = () => {
                     </div>
                     <div className='right-column'>
                         <div className='step-one'>
-                            <img className='step-image' src={image1} alt="" />
+                            <div className="image-with-number">
+                                <img className='step-image' src={image1} alt="" />
+                                <div className='number'>1</div>
+                            </div>
                             <h3>Forbered Risotto</h3>
                             <p className='text-one'>Tænd ovnen på 220°C/200°C varmluft</p>
                             <p className='text-two'>Pres eller hak hvidløg fint</p>
@@ -313,7 +336,10 @@ const Recipe = () => {
                             <p className='tip'></p>
                         </div>
                         <div className='step-two'>
-                            <img className='step-image' src={image2} alt="" />
+                            <div className="image-with-number">
+                                <img className='step-image' src={image2} alt="" />
+                                <div className='number'>2</div>
+                            </div>
                             <h3>Bag risotto</h3>
                             <p className='text-one'>Tilsæt vand [5 dl | 10 dl] Hvide løjer & urter og grøntsagsboullion, og bring i kog. Tag panden af varmen</p>
                             <p className='text-two'>Overfør til et ildfast fad og dæk til med sølvpapir.</p>
@@ -324,7 +350,10 @@ const Recipe = () => {
                             <p className='tip'>'Al dente' betyder at risene er kogte, men stadig har en smule bid</p>
                         </div>
                         <div className='step-three'>
-                            <img className='step-image' src={image3} alt="" />
+                            <div className="image-with-number">
+                                <img className='step-image' src={image3} alt="" />
+                                <div className='number'>3</div>
+                            </div>
                             <h3>Bag cherrytomater</h3>
                             <p className='text-one'>Halver cherrytomaterne</p>
                             <p className='text-two'>Fordel på en bageplade med bagepapir. Dryp med balsamico, en smule olivenolie og sukker [1spsk | 2spsk] og krydr med et nip salt og peber</p>
@@ -335,7 +364,10 @@ const Recipe = () => {
                             <p className='tip'></p>
                         </div>
                         <div className='step-four'>
-                            <img className='step-image' src={image4} alt="" />
+                            <div className="image-with-number">
+                                <img className='step-image' src={image4} alt="" />
+                                <div className='number'>4</div>
+                            </div>
                             <h3>Steg rejer</h3>
                             <p className='text-one'>Snit chili fint</p>
                             <p className='text-two'>Hak basilikum groft</p>
@@ -346,7 +378,10 @@ const Recipe = () => {
                             <p className='tip'></p>
                         </div>
                         <div className='step-five'>
-                            <img className='step-image' src={image5} alt="" />
+                            <div className="image-with-number">
+                                <img className='step-image' src={image5} alt="" />
+                                <div className='number'>5</div>
+                            </div>
                             <h3>Bland risotto</h3>
                             <p className='text-one'>Tag risotto ud af ovnen</p>
                             <p className='text-two'>Hak basilikum groft</p>
@@ -357,7 +392,10 @@ const Recipe = () => {
                             <p className='tip'>Tilsæt et skvæt vand hvis risottoen ser tør ud</p>
                         </div>
                         <div className='step-six'>
-                            <img className='step-image' src={image6} alt="" />
+                            <div className="image-with-number">
+                                <img className='step-image' src={image6} alt="" />
+                                <div className='number'>6</div>
+                            </div>
                             <h3>Server</h3>
                             <p className='text-one'>Anret risotto i dybe tallerkener</p>
                             <p className='text-two'>Top med rejer og resterende basilikum</p>
