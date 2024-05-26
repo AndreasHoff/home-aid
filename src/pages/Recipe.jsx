@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore';
 import NoSleep from 'nosleep.js';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -193,16 +193,12 @@ const Recipe = () => {
         const recipesRef = collection(db, 'recipes');
         const recipesSnapshot = await getDocs(recipesRef);
         const recipesList = recipesSnapshot.docs.map(doc => doc.data());
+        console.log(recipesList);
         return recipesList;
     };
 
-    useEffect(() => {
-        fetchRecipes().then(recipes => {
-            console.log(recipes);
-        });
-    }, []);
-
     const toggleNoSleep = () => {
+        fetchRecipes();
         !noSleep.isEnabled ? noSleep.enable() : noSleep.disable();
     };
 
