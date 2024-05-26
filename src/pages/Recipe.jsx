@@ -20,6 +20,73 @@ const RecipeContainer = styled.div`
     gap: 6rem;
     flex-direction: column;
     align-items: center;
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-top: 0;
+    }
+
+    table {
+        width: 100%;
+
+        tr {
+            th {
+                text-align: center;
+                padding: 0.5rem;
+            }
+
+            td {
+                text-align: center;
+                padding: 0.5rem;
+            }
+
+            td:first-child {
+                text-align: left;
+            }
+        }
+
+        .odd {
+            background-color: #f0f0f0;
+        }
+
+        .even {
+            background-color: #ffffff;
+        }
+    }
+
+    .recipe-image {
+        margin-top: 2rem;
+        width: 500px;
+    }
+
+    .recipe {
+        display: flex;
+        margin: 0 2rem;
+
+        .left-column {
+            flex: 1;
+
+            > div {
+                margin-right: 3rem;
+            }
+        }
+
+        .right-column {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+
+            .step-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    }
 `;
 
 const images = {
@@ -48,33 +115,122 @@ const Recipe = () => {
             </Helmet>
 
             <RecipeContainer>
-                <div className='recipe-image'>
-                    <img className='image' src={images[recipe.id]} alt={recipe.name} />
+                <div>
+                    <img className='recipe-image' src={images[recipe.id]} alt={recipe.name} />
                 </div>
                 <div className='recipe'>
                     <div className='left-column'>
-                        <div className='lets-get-going'></div>
-                        <div className='colonial-goods'></div>
+                        <div className='lets-get-going'>
+                            <h3>Lad os komme i gang</h3>
+                            <p>Husk at vaske hænder i 20 sekunder før du starter. Skyl derefter grøntsager, frugter og urter. Glem ikke at vaske hænder og køkkenredskaber umiddelbart efter håndtering af råt kød og rå fisk</p>
+                        </div>
+                        <div className='colonial-goods'>
+                            <h3>Kolonialvarer</h3>
+                            <p>Salt, peber, olivenolie, vand, sukker og smør</p>
+                        </div>
                         <div className='ingredients'>
+                            <h3>Ingredienser</h3>
                             <table>
-                                <tr>
+                                <tr className='odd'>
                                     <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>2 personer</th>
+                                    <th>4 personer</th>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr className='even'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Balsamico</td>
+                                    <td>12 ml</td>
+                                    <td>25 ml</td>
                                 </tr>
                             </table>
                         </div>
-                        <div className='nutrition-facts'></div>
-                        <div className='allergies'></div>
+                        <div className='nutrition-facts'>
+                            <h3>Næringsindhold</h3>
+                            <table>
+                                <tr className='odd'>
+                                    <th></th>
+                                    <th>Pr. 100g</th>
+                                    <th>Pr. portion 365g</th>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Energi</td>
+                                    <td>659kj/157 kcal</td>
+                                    <td>2407 kj/575 kcal</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Fedt</td>
+                                    <td>5g</td>
+                                    <td>20g</td>
+                                </tr>
+                                <tr className='even'>
+                                    <td>Heraf mættet fedt</td>
+                                    <td>2g</td>
+                                    <td>4g</td>
+                                </tr>
+                                <tr className='odd'>
+                                    <td>Heraf sukkerarter</td>
+                                    <td>3g</td>
+                                    <td>6g</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div className='allergies'>
+                            <h3>Allergener</h3>
+                            <p>5) krebsdyr 7) mælk 8) æg 10) selleri 14) sulfitter</p>
+                        </div>
                     </div>
                     <div className='right-column'>
                         <div className='step-one'>
-                            <img src="" alt="" />
+                            <img className='step-image' src={image1} alt="" />
                             <h3>Forbered Risotto</h3>
                             <p className='text-one'>Tænd ovnen på 220°C/200°C varmluft</p>
                             <p className='text-two'>Pres eller hak hvidløg fint</p>
@@ -85,7 +241,7 @@ const Recipe = () => {
                             <p className='tip'></p>
                         </div>
                         <div className='step-two'>
-                            <img src="" alt="" />
+                            <img className='step-image' src={image2} alt="" />
                             <h3>Bag risotto</h3>
                             <p className='text-one'>Tilsæt vand [5 dl | 10 dl] Hvide løjer & urter og grøntsagsboullion, og bring i kog. Tag panden af varmen</p>
                             <p className='text-two'>Overfør til et ildfast fad og dæk til med sølvpapir.</p>
@@ -96,7 +252,7 @@ const Recipe = () => {
                             <p className='tip'>'Al dente' betyder at risene er kogte, men stadig har en smule bid</p>
                         </div>
                         <div className='step-three'>
-                            <img src="" alt="" />
+                            <img className='step-image' src={image3} alt="" />
                             <h3>Bag cherrytomater</h3>
                             <p className='text-one'>Halver cherrytomaterne</p>
                             <p className='text-two'>Fordel på en bageplade med bagepapir. Dryp med balsamico, en smule olivenolie og sukker [1spsk | 2spsk] og krydr med et nip salt og peber</p>
@@ -107,7 +263,7 @@ const Recipe = () => {
                             <p className='tip'></p>
                         </div>
                         <div className='step-four'>
-                            <img src="" alt="" />
+                            <img className='step-image' src={image4} alt="" />
                             <h3>Steg rejer</h3>
                             <p className='text-one'>Snit chili fint</p>
                             <p className='text-two'>Hak basilikum groft</p>
@@ -118,7 +274,7 @@ const Recipe = () => {
                             <p className='tip'></p>
                         </div>
                         <div className='step-five'>
-                            <img src="" alt="" />
+                            <img className='step-image' src={image5} alt="" />
                             <h3>Bland risotto</h3>
                             <p className='text-one'>Tag risotto ud af ovnen</p>
                             <p className='text-two'>Hak basilikum groft</p>
@@ -129,7 +285,7 @@ const Recipe = () => {
                             <p className='tip'>Tilsæt et skvæt vand hvis risottoen ser tør ud</p>
                         </div>
                         <div className='step-six'>
-                            <img src="" alt="" />
+                            <img className='step-image' src={image6} alt="" />
                             <h3>Server</h3>
                             <p className='text-one'>Anret risotto i dybe tallerkener</p>
                             <p className='text-two'>Top med rejer og resterende basilikum</p>
