@@ -174,7 +174,7 @@ const RecipeContainer = styled.div`
         }
     }
 
-    @media screen and (max-width: 400px){
+    @media screen and (max-width: 425px){
         input[type="checkbox"] {
         width: 60px;
         height: 20px;
@@ -198,7 +198,6 @@ const RecipeContainer = styled.div`
 
         input:checked[type="checkbox"]:after {
             left: 52px;
-            
         }
 
         .recipe {
@@ -206,7 +205,7 @@ const RecipeContainer = styled.div`
 
             .right-column {
             grid-template-columns: repeat(1, 1fr);
-        }
+            }
         }
         
     }
