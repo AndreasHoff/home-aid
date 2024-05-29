@@ -112,7 +112,7 @@ const HelloFresh = () => {
                     {recipes.map((recipe) => (
                     <Link key={recipe.id} to={`/hello-fresh/${recipe.urlIdentifier}`}>
                         <div className="item">
-                        <img src={image1} alt={recipe.name} />
+                        <img src='https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_500,q_50,w_1900/hellofresh_s3/image/HF201104_R01_W51_SE_C12343801-3_KB_Main_Reshoot_low-f6f9d3c2.jpg' alt={recipe.name} />
                         <p>{recipe.name}</p>
                         </div>
                     </Link>
