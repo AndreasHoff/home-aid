@@ -1,16 +1,10 @@
-import React from 'react'
+import { collection, getDocs } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import image1 from '../assets/images/1.png'
-import image2 from '../assets/images/2.png'
-import image3 from '../assets/images/3.png'
-import image4 from '../assets/images/4.png'
-import image5 from '../assets/images/5.png'
-import image6 from '../assets/images/6.png'
-import image7 from '../assets/images/7.png'
-import image8 from '../assets/images/8.png'
-import recipes from '../assets/recipes.json'
+import { db } from '../firebase'
 
 const HelloFreshContainer = styled.div`
     display: flex;
@@ -64,7 +58,6 @@ const HelloFreshContainer = styled.div`
             box-shadow: 
                 rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, 
                 rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-            overflow: hidden;
             transition: transform 0.3s;
             border-radius: 0.5rem;
 
@@ -74,10 +67,14 @@ const HelloFreshContainer = styled.div`
                 object-fit: cover;
             }
             
-
             &:hover {
                 cursor: pointer;
                 transform: scale(1.05);
+            }
+
+            p {
+                display: flex;
+                justify-content: center;
             }
         }
     }
@@ -85,39 +82,45 @@ const HelloFreshContainer = styled.div`
 
 const images = {
     1: image1,
-    2: image2,
-    3: image3,
-    4: image4,
-    5: image5,
-    6: image6,
-    7: image7,
-    8: image8
   };
 
 const HelloFresh = () => {
-  return (
-    <>
-        <Helmet>
-            <title>HomeAid | HelloFresh </title>
-        </Helmet>
+    const [recipes, setRecipes] = useState([]);
 
-        <HelloFreshContainer>
-            <div className="add-recipe">
-                <Link className='button' to='/hello-fresh/add-recipe'>Add Recipe</Link>
-            </div>
-            <div className='gallery'>
-                {recipes.map((recipe) => (
+    useEffect(() => {
+        const fetchData = async () => {
+          const recipeCollection = collection(db, 'recipes');
+          const recipeSnapshot = await getDocs(recipeCollection);
+          const recipeData = recipeSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+          setRecipes(recipeData);
+        };
+      
+        fetchData();
+      }, []);
+
+    return (
+        <>
+            <Helmet>
+                <title>HomeAid | HelloFresh </title>
+            </Helmet>
+
+            <HelloFreshContainer>
+                <div className="add-recipe">
+                    <Link className='button' to='/hello-fresh/add-recipe'>Add Recipe</Link>
+                </div>
+                <div className='gallery'>
+                    {recipes.map((recipe) => (
                     <Link key={recipe.id} to={`/hello-fresh/${recipe.urlIdentifier}`}>
                         <div className="item">
-                            <img src={images[recipe.id]} alt={recipe.name} />
-                            <p>{recipe.name}</p>
+                        <img src={image1} alt={recipe.name} />
+                        <p>{recipe.name}</p>
                         </div>
                     </Link>
-                ))}
-            </div>
-        </HelloFreshContainer>
-    </>
-  )
+                    ))}
+                </div>
+            </HelloFreshContainer>
+        </>
+    )
 }
 
 export default HelloFresh

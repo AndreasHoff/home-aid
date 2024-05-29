@@ -1,6 +1,6 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from "firebase/firestore";
 import NoSleep from 'nosleep.js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import image5 from '../assets/images/5.png';
 import image6 from '../assets/images/6.png';
 import image7 from '../assets/images/7.png';
 import image8 from '../assets/images/8.png';
-import recipes from '../assets/recipes.json';
+// import recipes from '../assets/recipes.json';
 import { db } from '../firebase';
 
 const RecipeContainer = styled.div`
@@ -185,38 +185,60 @@ const images = {
 };
 
 const Recipe = () => {
+    const [loading, setLoading] = useState(true);
+    const [recipe, setRecipe] = useState(null);
     const [noSleep, setNoSleep] = useState(new NoSleep());
     const { urlIdentifier } = useParams();
-    const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
+    const [isMobile, setIsMobile] = useState(false);
+    //const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
 
-    const fetchRecipes = async () => {
-        const recipesRef = collection(db, 'recipes');
-        const recipesSnapshot = await getDocs(recipesRef);
-        const recipesList = recipesSnapshot.docs.map(doc => doc.data());
-        console.log(recipesList);
-        return recipesList;
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+          const recipeCollection = collection(db, 'recipes');
+          const q = query(recipeCollection, where("urlIdentifier", "==", urlIdentifier));
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            const recipeData = querySnapshot.docs[0].data();
+            setRecipe(recipeData);
+          }
+          setLoading(false);
+        };
+      
+        fetchData();
+      }, [urlIdentifier]);
+
+      useEffect(() => {
+        const userAgent =
+          typeof window.navigator === 'undefined' ? '' : navigator.userAgent;
+        const mobile = Boolean(
+          userAgent.match(
+            /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+          )
+        );
+        setIsMobile(mobile);
+      }, []);
 
     const toggleNoSleep = () => {
-        fetchRecipes();
         !noSleep.isEnabled ? noSleep.enable() : noSleep.disable();
     };
 
     if (!recipe) {
-        return <p>Recipe not found</p>;
+        return <p>Loading recipe</p>;
     }
 
     return (
         <>
             <Helmet>
-                <title>HomeAid | {recipe.name}</title>
+                <title>HomeAid | {recipe ? String(recipe.name) : 'Loading...'}</title>
             </Helmet>
 
             <RecipeContainer>
-                <div className='no-sleep-container'>
-                    <input type='checkbox' onClick={toggleNoSleep}></input>
-                    <p className='no-sleep'>Undgå at skærmen slukker</p>
-                </div>
+                {!isMobile && (
+                    <div className='no-sleep-container'>
+                        <input type='checkbox' onClick={toggleNoSleep}></input>
+                        <p className='no-sleep'>Undgå at skærmen slukker</p>
+                    </div>
+                )}
                 <div className='recipe'>
                     <div className='left-column'>
                         <div className='lets-get-going'>
@@ -225,11 +247,11 @@ const Recipe = () => {
                         </div>
                         <div className='kitchen-utensils'>
                             <h3>Køkkenredskaber</h3>
-                            <p>Stegepande, gryde og skærebræt</p>
+                            <p>{recipe.kitchenUtensils}</p>
                         </div>
                         <div className='colonial-goods'>
                             <h3>Kolonialvarer</h3>
-                            <p>Salt, peber, olivenolie, vand, sukker og smør</p>
+                            <p>{recipe.colonialGoods}</p>
                         </div>
                         <div className='ingredients'>
                             <h3>Ingredienser</h3>
@@ -240,61 +262,13 @@ const Recipe = () => {
                                         <th>2 personer</th>
                                         <th>4 personer</th>
                                     </tr>
-                                    <tr className='even'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='even'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='even'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='even'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='even'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
-                                    <tr className='even'>
-                                        <td>Balsamico</td>
-                                        <td>12 ml</td>
-                                        <td>25 ml</td>
-                                    </tr>
+                                    {recipe && recipe.ingredients && Object.values(recipe.ingredients).map((ingredient, index) => (
+                                        <tr key={index} className={index % 2 === 0 ? 'even' : 'odd'}>
+                                            <td>{ingredient[0]}</td>
+                                            <td>{ingredient[1]}</td>
+                                            <td>{ingredient[2]}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -307,38 +281,25 @@ const Recipe = () => {
                                         <th>Pr. 100g</th>
                                         <th>Pr. portion 365g</th>
                                     </tr>
-                                    <tr className='even'>
-                                        <td>Energi</td>
-                                        <td>659kj/157 kcal</td>
-                                        <td>2407 kj/575 kcal</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Fedt</td>
-                                        <td>5g</td>
-                                        <td>20g</td>
-                                    </tr>
-                                    <tr className='even'>
-                                        <td>Heraf mættet fedt</td>
-                                        <td>2g</td>
-                                        <td>4g</td>
-                                    </tr>
-                                    <tr className='odd'>
-                                        <td>Heraf sukkerarter</td>
-                                        <td>3g</td>
-                                        <td>6g</td>
-                                    </tr>
+                                    {recipe && recipe.nutritionFacts && Object.values(recipe.nutritionFacts).map((nutrient, index) => (
+                                        <tr key={index} className={index % 2 === 0 ? 'even' : 'odd'}>
+                                            <td>{nutrient[0]}</td>
+                                            <td>{nutrient[1]}</td>
+                                            <td>{nutrient[2]}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
                         <div className='allergies'>
                             <h3>Allergener</h3>
-                            <p>5) krebsdyr 7) mælk 8) æg 10) selleri 14) sulfitter</p>
+                            <p>{recipe.allergies}</p>
                         </div>
                     </div>
                     <div className='right-column'>
                         <div className='step-one'>
                             <div className="image-with-number">
-                                <img className='step-image' src={image1} alt="" />
+                                <img className='step-image' src='https://img.hellofresh.com/w_384,q_auto,f_auto,c_limit,fl_lossy/hellofresh_s3/60a507ebaf62fe0a846635b8/step-4e324d00.jpg' alt="" />
                                 <div className='number'>1</div>
                             </div>
                             <h3>Forbered Risotto</h3>
@@ -352,7 +313,7 @@ const Recipe = () => {
                         </div>
                         <div className='step-two'>
                             <div className="image-with-number">
-                                <img className='step-image' src={image2} alt="" />
+                                <img className='step-image' src='https://img.hellofresh.com/w_384,q_auto,f_auto,c_limit,fl_lossy/hellofresh_s3/60a507ebaf62fe0a846635b8/step-54d5c910.jpg' alt="" />
                                 <div className='number'>2</div>
                             </div>
                             <h3>Bag risotto</h3>
@@ -366,7 +327,7 @@ const Recipe = () => {
                         </div>
                         <div className='step-three'>
                             <div className="image-with-number">
-                                <img className='step-image' src={image3} alt="" />
+                                <img className='step-image' src='https://img.hellofresh.com/w_384,q_auto,f_auto,c_limit,fl_lossy/hellofresh_s3/60a507ebaf62fe0a846635b8/step-5fbd4b20.jpg' alt="" />
                                 <div className='number'>3</div>
                             </div>
                             <h3>Bag cherrytomater</h3>
@@ -380,7 +341,7 @@ const Recipe = () => {
                         </div>
                         <div className='step-four'>
                             <div className="image-with-number">
-                                <img className='step-image' src={image4} alt="" />
+                                <img className='step-image' src='https://img.hellofresh.com/w_384,q_auto,f_auto,c_limit,fl_lossy/hellofresh_s3/60a507ebaf62fe0a846635b8/step-fcf54230.jpg' alt="" />
                                 <div className='number'>4</div>
                             </div>
                             <h3>Steg rejer</h3>
@@ -394,7 +355,7 @@ const Recipe = () => {
                         </div>
                         <div className='step-five'>
                             <div className="image-with-number">
-                                <img className='step-image' src={image5} alt="" />
+                                <img className='step-image' src='https://img.hellofresh.com/w_384,q_auto,f_auto,c_limit,fl_lossy/hellofresh_s3/60a507ebaf62fe0a846635b8/step-38e37f40.jpg' alt="" />
                                 <div className='number'>5</div>
                             </div>
                             <h3>Bland risotto</h3>
@@ -408,7 +369,7 @@ const Recipe = () => {
                         </div>
                         <div className='step-six'>
                             <div className="image-with-number">
-                                <img className='step-image' src={image6} alt="" />
+                                <img className='step-image' src='https://img.hellofresh.com/w_384,q_auto,f_auto,c_limit,fl_lossy/hellofresh_s3/60a507ebaf62fe0a846635b8/step-dc79e950.jpg' alt="" />
                                 <div className='number'>6</div>
                             </div>
                             <h3>Server</h3>
