@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-// import recipes from '../assets/recipes.json';
-import { db } from '../firebase';
+import { db } from '../firebase.js';
 
 const RecipeContainer = styled.div`
 
