@@ -2,7 +2,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import React, { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
-import { db } from '../firebase.js';
+import { db } from '../firebase';
 
 const AddRecipeContainer = styled.div`
     display: flex;
