@@ -3,13 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAX5tF5aabM5-zOqY7nvg03l3psYMjJoXU",
-  authDomain: "home-aid-b417b.firebaseapp.com",
-  projectId: "home-aid-b417b",
-  storageBucket: "home-aid-b417b.appspot.com",
-  messagingSenderId: "1092560110873",
-  appId: "1:1092560110873:web:facd43138a367960f1f188",
-  measurementId: "G-DS22XW35HQ"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,4 +18,3 @@ const analytics = getAnalytics(app);
 
 export { analytics, db };
 export default app;
-
