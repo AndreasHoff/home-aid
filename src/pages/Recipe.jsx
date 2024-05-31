@@ -217,7 +217,6 @@ const Recipe = () => {
     const [recipe, setRecipe] = useState(null);
     const [noSleep, setNoSleep] = useState(new NoSleep());
     const { urlIdentifier } = useParams();
-    //const recipe = recipes.find((recipe) => recipe.urlIdentifier === String(urlIdentifier));
 
     useEffect(() => {
         const fetchData = async () => {

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import image1 from '../assets/images/1.png'
 import { db } from '../firebase'
 
 const HelloFreshContainer = styled.div`
@@ -80,10 +79,6 @@ const HelloFreshContainer = styled.div`
     }
 `;
 
-const images = {
-    1: image1,
-  };
-
 const HelloFresh = () => {
     const [recipes, setRecipes] = useState([]);
 
@@ -94,7 +89,6 @@ const HelloFresh = () => {
           const recipeData = recipeSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
           setRecipes(recipeData);
         };
-      
         fetchData();
       }, []);
 
@@ -112,7 +106,7 @@ const HelloFresh = () => {
                     {recipes.map((recipe) => (
                     <Link key={recipe.id} to={`/hello-fresh/${recipe.urlIdentifier}`}>
                         <div className="item">
-                        <img src='https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_500,q_50,w_1900/hellofresh_s3/image/HF201104_R01_W51_SE_C12343801-3_KB_Main_Reshoot_low-f6f9d3c2.jpg' alt={recipe.name} />
+                        <img src={recipe.image} alt={recipe.name} />
                         <p>{recipe.name}</p>
                         </div>
                     </Link>
