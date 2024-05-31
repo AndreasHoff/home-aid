@@ -157,7 +157,13 @@ const AddRecipe = () => {
             // Create a reference to the 'recipes' collection
             const recipesRef = collection(db, 'recipes');
             // Create a new document in the 'recipes' collection with the kitchenUtensils data
-            await addDoc(recipesRef, { kitchenUtensils, recipeName, colonialGoods, allergies, urlIdentifier });
+            await addDoc(recipesRef, { kitchenUtensils, name, colonialGoods, allergies, urlIdentifier, stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix});
+            setStepOneCurrentSubParagraph('');
+            setStepTwoCurrentSubParagraph('');
+            setStepThreeCurrentSubParagraph('');
+            setStepFourCurrentSubParagraph('');
+            setStepFiveCurrentSubParagraph('');
+            setStepSixCurrentSubParagraph('');
             setKitchenUtensils('');
             setName('');
             setColonialGoods('');
