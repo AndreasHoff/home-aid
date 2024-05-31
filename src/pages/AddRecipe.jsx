@@ -43,7 +43,7 @@ const AddRecipe = () => {
     const [stepThreeCurrentSubParagraph, setStepThreeCurrentSubParagraph] = useState('');
     const [stepFourCurrentSubParagraph, setStepFourCurrentSubParagraph] = useState('');
     const [stepFiveCurrentSubParagraph, setStepFiveCurrentSubParagraph] = useState('');
-    const [stepSixCurrentSubParagraphSix, setStepSixCurrentSubParagraph] = useState('');
+    const [stepSixCurrentSubParagraph, setStepSixCurrentSubParagraph] = useState('');
     const [ingredients, setIngredients] = useState({
         ingredients: [],
     });
@@ -92,7 +92,7 @@ const AddRecipe = () => {
     const addSubParagraphStepTwo = () => {
         if (stepTwoCurrentSubParagraph.trim() !== '') {
           setStepTwo({
-            ...stepOne,
+            ...stepTwo,
             subParagraphs: [...stepTwo.subParagraphs, stepTwoCurrentSubParagraph],
           });
           setStepTwoCurrentSubParagraph('');
@@ -100,42 +100,42 @@ const AddRecipe = () => {
     };
 
     const addSubParagraphStepThree = () => {
-        if (currentSubParagraph.trim() !== '') {
-          setStepOne({
-            ...stepOne,
-            subParagraphs: [...stepOne.subParagraphs, currentSubParagraph],
+        if (stepThreeCurrentSubParagraph.trim() !== '') {
+          setStepThree({
+            ...stepThree,
+            subParagraphs: [...stepThree.subParagraphs, stepThreeCurrentSubParagraph],
           });
-          setCurrentSubParagraph('');
+          setStepThreeCurrentSubParagraph('');
         }
     };
 
     const addSubParagraphStepFour = () => {
-        if (currentSubParagraph.trim() !== '') {
-          setStepOne({
-            ...stepOne,
-            subParagraphs: [...stepOne.subParagraphs, currentSubParagraph],
+        if (stepFourCurrentSubParagraph.trim() !== '') {
+          setStepFour({
+            ...stepFour,
+            subParagraphs: [...stepFour.subParagraphs, stepFourCurrentSubParagraph],
           });
-          setCurrentSubParagraph('');
+          setStepFourCurrentSubParagraph('');
         }
     };
 
     const addSubParagraphStepFive = () => {
-        if (currentSubParagraph.trim() !== '') {
-          setStepOne({
-            ...stepOne,
-            subParagraphs: [...stepOne.subParagraphs, currentSubParagraph],
+        if (stepFiveCurrentSubParagraph.trim() !== '') {
+          setStepFive({
+            ...stepFive,
+            subParagraphs: [...stepFive.subParagraphs, stepFiveCurrentSubParagraph],
           });
-          setCurrentSubParagraph('');
+          setStepFiveCurrentSubParagraph('');
         }
     };
 
     const addSubParagraphStepSix = () => {
-        if (currentSubParagraph.trim() !== '') {
-          setStepOne({
-            ...stepOne,
-            subParagraphs: [...stepOne.subParagraphs, currentSubParagraph],
+        if (stepSixCurrentSubParagraph.trim() !== '') {
+          setStepSix({
+            ...stepSix,
+            subParagraphs: [...stepSix.subParagraphs, stepSixCurrentSubParagraph],
           });
-          setCurrentSubParagraph('');
+          setStepSixCurrentSubParagraph('');
         }
     };
 
@@ -218,8 +218,8 @@ const AddRecipe = () => {
 
                     <div className="steps-container">
 
-                        <div className='stepOne'>
-                            <h2>Step One</h2>
+                        <div id='step-one'>
+                            <h2>1</h2>
                             <div className="input-row">
                                 <input 
                                     type="text" 
@@ -249,8 +249,8 @@ const AddRecipe = () => {
                             ))}
                         </div>
 
-                        <div className='stepTwo'>
-                            <h2>Step Two</h2>
+                        <div id='step-two'>
+                            <h2>2</h2>
                             <div className="input-row">
                                 <input 
                                     type="text" 
@@ -279,126 +279,131 @@ const AddRecipe = () => {
                             <p key={index}>{subParagraph}</p>
                             ))}
                         </div>
-                        {/* <div className='stepOne'>
-                            <h2>Step One</h2>
+
+                        <div id='step-three'>
+                            <h2>3</h2>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={stepOne.headline}
-                                    onChange={e => setStepOne({...stepOne, headline: e.target.value})} placeholder="Overskrift" 
+                                    value={stepThree.headline}
+                                    onChange={e => setStepThree({...stepThree, headline: e.target.value})} placeholder="Overskrift" 
                                     required 
                                 />
                                 <input 
                                     type="text" 
-                                    value={stepOne.image}
-                                    onChange={e => setStepOne({...stepOne, image: e.target.value})} placeholder="Url på billede" 
+                                    value={stepThree.image}
+                                    onChange={e => setStepThree({...stepThree, image: e.target.value})} placeholder="Url på billede" 
                                     required 
                                 />
                             </div>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={currentSubParagraph}
-                                    onChange={e => setCurrentSubParagraph(e.target.value)}
+                                    value={stepThreeCurrentSubParagraph}
+                                    onChange={e => setStepThreeCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
                                     required 
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
-                            {stepOne.subParagraphs.map((subParagraph, index) => (
+                            <button onClick={addSubParagraphStepThree}>Add Sub Paragraph</button>
+                            {stepThree.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
                         </div>
-                        <div className='stepOne'>
-                            <h2>Step One</h2>
+
+                        <div id='step-four'>
+                            <h2>4</h2>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={stepOne.headline}
-                                    onChange={e => setStepOne({...stepOne, headline: e.target.value})} placeholder="Overskrift" 
+                                    value={stepFour.headline}
+                                    onChange={e => setStepFour({...stepFour, headline: e.target.value})} placeholder="Overskrift" 
                                     required 
                                 />
                                 <input 
                                     type="text" 
-                                    value={stepOne.image}
-                                    onChange={e => setStepOne({...stepOne, image: e.target.value})} placeholder="Url på billede" 
+                                    value={stepFour.image}
+                                    onChange={e => setStepFour({...stepFour, image: e.target.value})} placeholder="Url på billede" 
                                     required 
                                 />
                             </div>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={currentSubParagraph}
-                                    onChange={e => setCurrentSubParagraph(e.target.value)}
+                                    value={stepFourCurrentSubParagraph}
+                                    onChange={e => setStepFourCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
                                     required 
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
-                            {stepOne.subParagraphs.map((subParagraph, index) => (
+                            <button onClick={addSubParagraphStepFour}>Add Sub Paragraph</button>
+                            {stepFour.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
                         </div>
-                        <div className='stepOne'>
-                            <h2>Step One</h2>
+
+                        <div id='step-five'>
+                            <h2>5</h2>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={stepOne.headline}
-                                    onChange={e => setStepOne({...stepOne, headline: e.target.value})} placeholder="Overskrift" 
+                                    value={stepFive.headline}
+                                    onChange={e => setStepFive({...stepFive, headline: e.target.value})} placeholder="Overskrift" 
                                     required 
                                 />
                                 <input 
                                     type="text" 
-                                    value={stepOne.image}
-                                    onChange={e => setStepOne({...stepOne, image: e.target.value})} placeholder="Url på billede" 
+                                    value={stepFive.image}
+                                    onChange={e => setStepFive({...stepFive, image: e.target.value})} placeholder="Url på billede" 
                                     required 
                                 />
                             </div>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={currentSubParagraph}
-                                    onChange={e => setCurrentSubParagraph(e.target.value)}
+                                    value={stepFiveCurrentSubParagraph}
+                                    onChange={e => setStepFiveCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
                                     required 
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
-                            {stepOne.subParagraphs.map((subParagraph, index) => (
+                            <button onClick={addSubParagraphStepFive}>Add Sub Paragraph</button>
+                            {stepFive.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
                         </div>
-                        <div className='stepOne'>
-                            <h2>Step One</h2>
+
+                        <div id='step-six'>
+                            <h2>6</h2>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={stepOne.headline}
-                                    onChange={e => setStepOne({...stepOne, headline: e.target.value})} placeholder="Overskrift" 
+                                    value={stepSix.headline}
+                                    onChange={e => setStepSix({...stepSix, headline: e.target.value})} placeholder="Overskrift" 
                                     required 
                                 />
                                 <input 
                                     type="text" 
-                                    value={stepOne.image}
-                                    onChange={e => setStepOne({...stepOne, image: e.target.value})} placeholder="Url på billede" 
+                                    value={stepSix.image}
+                                    onChange={e => setStepSix({...stepSix, image: e.target.value})} placeholder="Url på billede" 
                                     required 
                                 />
                             </div>
                             <div className="input-row">
                                 <input 
                                     type="text" 
-                                    value={currentSubParagraph}
-                                    onChange={e => setCurrentSubParagraph(e.target.value)}
+                                    value={stepSixCurrentSubParagraph}
+                                    onChange={e => setStepSixCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
                                     required 
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
-                            {stepOne.subParagraphs.map((subParagraph, index) => (
+                            <button onClick={addSubParagraphStepSix}>Add Sub Paragraph</button>
+                            {stepSix.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
-                        </div> */}
+                        </div>
+
                     </div>
                     <button type="submit">Add Recipe</button>
                 </form>
