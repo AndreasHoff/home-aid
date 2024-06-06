@@ -1,5 +1,5 @@
 import { addDoc, collection } from 'firebase/firestore';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { db } from '../firebase';
@@ -44,10 +44,10 @@ const AddRecipe = () => {
     const [stepFourCurrentSubParagraph, setStepFourCurrentSubParagraph] = useState('');
     const [stepFiveCurrentSubParagraph, setStepFiveCurrentSubParagraph] = useState('');
     const [stepSixCurrentSubParagraph, setStepSixCurrentSubParagraph] = useState('');
+    const [currentSubIngredient, setCurrentSubIngredient] = useState('');
     const [ingredients, setIngredients] = useState({
-        ingredients: [],
+        subIngredients: [],
     });
-
     const [stepOne, setStepOne] = useState({
         headline: '',
         image: '',
@@ -139,14 +139,15 @@ const AddRecipe = () => {
         }
     };
 
-    useEffect(() => {
-    console.log('step 1', stepOne.subParagraphs);
-    console.log('step 2', stepTwo.subParagraphs);
-    console.log('step 3', stepThree.subParagraphs);
-    console.log('step 4', stepFour.subParagraphs);
-    console.log('step 5', stepFive.subParagraphs);
-    console.log('step 6', stepSix.subParagraphs);
-    }, [stepOne.subParagraphs, stepTwo.subParagraphs, stepThree.subParagraphs, stepFour.subParagraphs, stepFive.subParagraphs, stepSix.subParagraphs]);
+    const addSubIngredient = () => {
+        if (currentSubIngredient.trim() !== '') {
+            setIngredients({
+                ...ingredients,
+                subIngredients: [...ingredients.subIngredients, currentSubIngredient],
+            });
+            setCurrentSubIngredient('');
+        }
+    };
 
     const formRef = useRef();
 
@@ -154,9 +155,7 @@ const AddRecipe = () => {
         e.preventDefault();
 
         try {
-            // Create a reference to the 'recipes' collection
             const recipesRef = collection(db, 'recipes');
-            // Create a new document in the 'recipes' collection with the kitchenUtensils data
             await addDoc(recipesRef, { kitchenUtensils, name, colonialGoods, allergies, urlIdentifier, stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix});
             setStepOneCurrentSubParagraph('');
             setStepTwoCurrentSubParagraph('');
@@ -164,6 +163,7 @@ const AddRecipe = () => {
             setStepFourCurrentSubParagraph('');
             setStepFiveCurrentSubParagraph('');
             setStepSixCurrentSubParagraph('');
+            setCurrentSubIngredient('');
             setKitchenUtensils('');
             setName('');
             setColonialGoods('');
@@ -190,13 +190,13 @@ const AddRecipe = () => {
                             type="text" 
                             value={name}
                             onChange={e => setName(e.target.value)} placeholder="Name of recipe" 
-                            required 
+                             
                         />
                         <input 
                             type="text" 
                             value={urlIdentifier}
                             onChange={e => setUrlIdentifier(e.target.value)} placeholder="Url Identifier" 
-                            required 
+                             
                         />
                     </div>
                     <div className="input-row">
@@ -204,13 +204,13 @@ const AddRecipe = () => {
                             type="text" 
                             value={allergies}
                             onChange={e => setAllergies(e.target.value)} placeholder="Allergies" 
-                            required 
+                             
                         />
                         <input 
                             type="text" 
                             value={colonialGoods}
                             onChange={e => setColonialGoods(e.target.value)} placeholder="Colonial Goods" 
-                            required 
+                             
                         />
                     </div>
                     <div className="input-row">
@@ -218,7 +218,7 @@ const AddRecipe = () => {
                             type="text" 
                             value={kitchenUtensils}
                             onChange={e => setKitchenUtensils(e.target.value)} placeholder="Kitchen Utensils" 
-                            required 
+                             
                         />
                     </div>
 
@@ -231,13 +231,13 @@ const AddRecipe = () => {
                                     type="text" 
                                     value={stepOne.headline}
                                     onChange={e => setStepOne({...stepOne, headline: e.target.value})} placeholder="Overskrift" 
-                                    required 
+                                     
                                 />
                                 <input 
                                     type="text" 
                                     value={stepOne.image}
                                     onChange={e => setStepOne({...stepOne, image: e.target.value})} placeholder="Url på billede" 
-                                    required 
+                                     
                                 />
                             </div>
                             <div className="input-row">
@@ -246,7 +246,7 @@ const AddRecipe = () => {
                                     value={stepOneCurrentSubParagraph}
                                     onChange={e => setStepOneCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
-                                    required 
+                                     
                                 />
                             </div>
                             <button onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
@@ -262,13 +262,13 @@ const AddRecipe = () => {
                                     type="text" 
                                     value={stepTwo.headline}
                                     onChange={e => setStepTwo({...stepTwo, headline: e.target.value})} placeholder="Overskrift" 
-                                    required 
+                                     
                                 />
                                 <input 
                                     type="text" 
                                     value={stepTwo.image}
                                     onChange={e => setStepTwo({...stepTwo, image: e.target.value})} placeholder="Url på billede" 
-                                    required 
+                                     
                                 />
                             </div>
                             <div className="input-row">
@@ -277,7 +277,7 @@ const AddRecipe = () => {
                                     value={stepTwoCurrentSubParagraph}
                                     onChange={e => setStepTwoCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
-                                    required 
+                                     
                                 />
                             </div>
                             <button onClick={addSubParagraphStepTwo}>Add Sub Paragraph</button>
@@ -293,13 +293,13 @@ const AddRecipe = () => {
                                     type="text" 
                                     value={stepThree.headline}
                                     onChange={e => setStepThree({...stepThree, headline: e.target.value})} placeholder="Overskrift" 
-                                    required 
+                                     
                                 />
                                 <input 
                                     type="text" 
                                     value={stepThree.image}
                                     onChange={e => setStepThree({...stepThree, image: e.target.value})} placeholder="Url på billede" 
-                                    required 
+                                     
                                 />
                             </div>
                             <div className="input-row">
@@ -308,7 +308,7 @@ const AddRecipe = () => {
                                     value={stepThreeCurrentSubParagraph}
                                     onChange={e => setStepThreeCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
-                                    required 
+                                     
                                 />
                             </div>
                             <button onClick={addSubParagraphStepThree}>Add Sub Paragraph</button>
@@ -324,13 +324,13 @@ const AddRecipe = () => {
                                     type="text" 
                                     value={stepFour.headline}
                                     onChange={e => setStepFour({...stepFour, headline: e.target.value})} placeholder="Overskrift" 
-                                    required 
+                                     
                                 />
                                 <input 
                                     type="text" 
                                     value={stepFour.image}
                                     onChange={e => setStepFour({...stepFour, image: e.target.value})} placeholder="Url på billede" 
-                                    required 
+                                     
                                 />
                             </div>
                             <div className="input-row">
@@ -339,7 +339,7 @@ const AddRecipe = () => {
                                     value={stepFourCurrentSubParagraph}
                                     onChange={e => setStepFourCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
-                                    required 
+                                     
                                 />
                             </div>
                             <button onClick={addSubParagraphStepFour}>Add Sub Paragraph</button>
@@ -355,13 +355,13 @@ const AddRecipe = () => {
                                     type="text" 
                                     value={stepFive.headline}
                                     onChange={e => setStepFive({...stepFive, headline: e.target.value})} placeholder="Overskrift" 
-                                    required 
+                                     
                                 />
                                 <input 
                                     type="text" 
                                     value={stepFive.image}
                                     onChange={e => setStepFive({...stepFive, image: e.target.value})} placeholder="Url på billede" 
-                                    required 
+                                     
                                 />
                             </div>
                             <div className="input-row">
@@ -370,7 +370,7 @@ const AddRecipe = () => {
                                     value={stepFiveCurrentSubParagraph}
                                     onChange={e => setStepFiveCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
-                                    required 
+                                     
                                 />
                             </div>
                             <button onClick={addSubParagraphStepFive}>Add Sub Paragraph</button>
@@ -386,13 +386,13 @@ const AddRecipe = () => {
                                     type="text" 
                                     value={stepSix.headline}
                                     onChange={e => setStepSix({...stepSix, headline: e.target.value})} placeholder="Overskrift" 
-                                    required 
+                                     
                                 />
                                 <input 
                                     type="text" 
                                     value={stepSix.image}
                                     onChange={e => setStepSix({...stepSix, image: e.target.value})} placeholder="Url på billede" 
-                                    required 
+                                     
                                 />
                             </div>
                             <div className="input-row">
@@ -401,7 +401,7 @@ const AddRecipe = () => {
                                     value={stepSixCurrentSubParagraph}
                                     onChange={e => setStepSixCurrentSubParagraph(e.target.value)}
                                     placeholder="Sub Paragraph" 
-                                    required 
+                                     
                                 />
                             </div>
                             <button onClick={addSubParagraphStepSix}>Add Sub Paragraph</button>
@@ -410,6 +410,23 @@ const AddRecipe = () => {
                             ))}
                         </div>
 
+                    </div>
+                    
+                    <div>
+                        <h2>Ingredienser</h2>
+                        <div className="input-row">
+                            <input 
+                                type="text" 
+                                value={currentSubIngredient}
+                                onChange={e => setCurrentSubIngredient(e.target.value)}
+                                placeholder="Sub Ingredient" 
+                                    
+                            />
+                        </div>
+                        <button type="button" onClick={addSubIngredient}>Add Sub Ingredient</button>
+                        {ingredients.subIngredients.map((subIngredient, index) => (
+                        <p key={index}>{subIngredient}</p>
+                        ))}
                     </div>
                     <button type="submit">Add Recipe</button>
                 </form>
