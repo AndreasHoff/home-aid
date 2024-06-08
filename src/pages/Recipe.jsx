@@ -1,8 +1,8 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
 import NoSleep from 'nosleep.js';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { db } from '../firebase';
 
@@ -217,21 +217,37 @@ const Recipe = () => {
     const [recipe, setRecipe] = useState(null);
     const [noSleep, setNoSleep] = useState(new NoSleep());
     const { urlIdentifier } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-          const recipeCollection = collection(db, 'recipes');
-          const q = query(recipeCollection, where("urlIdentifier", "==", urlIdentifier));
-          const querySnapshot = await getDocs(q);
-          if (!querySnapshot.empty) {
-            const recipeData = querySnapshot.docs[0].data();
-            setRecipe(recipeData);
-          }
-          setLoading(false);
+            const recipeCollection = collection(db, 'recipes');
+            const q = query(recipeCollection, where("urlIdentifier", "==", urlIdentifier));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                const recipeData = querySnapshot.docs[0].data();
+                setRecipe(recipeData);
+            }
+            setLoading(false);
         };
-      
+
         fetchData();
-      }, [urlIdentifier]);
+    }, [urlIdentifier]);
+
+    const deleteRecipe = async () => {
+        try {
+            const q = query(collection(db, 'recipes'), where('urlIdentifier', '==', urlIdentifier));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                deleteDoc(doc.ref);
+            });
+            
+            console.log(`Recipe with urlIdentifier ${urlIdentifier} deleted`);
+            navigate('/hello-fresh');
+        } catch (error) {
+            console.error('Error deleting recipe:', error);
+        }
+    };
 
     const toggleNoSleep = () => {
         !noSleep.isEnabled ? noSleep.enable() : noSleep.disable();
@@ -248,10 +264,10 @@ const Recipe = () => {
             </Helmet>
 
             <RecipeContainer>
-                    <div className='no-sleep-container'>
-                        <input type='checkbox' onClick={toggleNoSleep}></input>
-                        <p className='no-sleep'>Undgå at skærmen slukker</p>
-                    </div>
+                <div className='no-sleep-container'>
+                    <input type='checkbox' onClick={toggleNoSleep}></input>
+                    <p className='no-sleep'>Undgå at skærmen slukker</p>
+                </div>
                 <div className='recipe'>
                     <div className='left-column'>
                         <div className='lets-get-going'>
@@ -321,7 +337,7 @@ const Recipe = () => {
                                     {subParagraph}
                                 </p>
                             ))}
-                            {recipe.stepOne.tip && 
+                            {recipe.stepOne.tip &&
                                 <p className='tip'>Tip: {recipe.stepOne.tip}</p>
                             }
                         </div>
@@ -336,7 +352,7 @@ const Recipe = () => {
                                     {subParagraph}
                                 </p>
                             ))}
-                            {recipe.stepTwo.tip && 
+                            {recipe.stepTwo.tip &&
                                 <p className='tip'>Tip: {recipe.stepTwo.tip}</p>
                             }
                         </div>
@@ -351,7 +367,7 @@ const Recipe = () => {
                                     {subParagraph}
                                 </p>
                             ))}
-                            {recipe.stepThree.tip && 
+                            {recipe.stepThree.tip &&
                                 <p className='tip'>Tip: {recipe.stepThree.tip}</p>
                             }
                         </div>
@@ -366,7 +382,7 @@ const Recipe = () => {
                                     {subParagraph}
                                 </p>
                             ))}
-                            {recipe.stepFour.tip && 
+                            {recipe.stepFour.tip &&
                                 <p className='tip'>Tip: {recipe.stepFour.tip}</p>
                             }
                         </div>
@@ -381,7 +397,7 @@ const Recipe = () => {
                                     {subParagraph}
                                 </p>
                             ))}
-                            {recipe.stepFive.tip && 
+                            {recipe.stepFive.tip &&
                                 <p className='tip'>Tip: {recipe.stepFive.tip}</p>
                             }
                         </div>
@@ -396,11 +412,15 @@ const Recipe = () => {
                                     {subParagraph}
                                 </p>
                             ))}
-                            {recipe.stepSix.tip && 
+                            {recipe.stepSix.tip &&
                                 <p className='tip'>Tip: {recipe.stepSix.tip}</p>
                             }
                         </div>
                     </div>
+                </div>
+
+                <div className="delete-recipe">
+                    <button onClick={deleteRecipe}>Slet opskrift</button>
                 </div>
             </RecipeContainer>
         </>

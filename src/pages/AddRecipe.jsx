@@ -44,10 +44,9 @@ const AddRecipe = () => {
     const [stepFourCurrentSubParagraph, setStepFourCurrentSubParagraph] = useState('');
     const [stepFiveCurrentSubParagraph, setStepFiveCurrentSubParagraph] = useState('');
     const [stepSixCurrentSubParagraph, setStepSixCurrentSubParagraph] = useState('');
+    const [currentIngredient, setCurrentIngredient] = useState('');
     const [currentSubIngredient, setCurrentSubIngredient] = useState('');
-    const [ingredients, setIngredients] = useState({
-        subIngredients: [],
-    });
+    const [ingredients, setIngredients] = useState({});
     const [stepOne, setStepOne] = useState({
         headline: '',
         image: '',
@@ -139,11 +138,11 @@ const AddRecipe = () => {
         }
     };
 
-    const addSubIngredient = () => {
+    const addSubIngredient = (ingredientName) => {
         if (currentSubIngredient.trim() !== '') {
             setIngredients({
                 ...ingredients,
-                subIngredients: [...ingredients.subIngredients, currentSubIngredient],
+                [ingredientName]: [...(ingredients[ingredientName] || []), currentSubIngredient],
             });
             setCurrentSubIngredient('');
         }
@@ -153,24 +152,32 @@ const AddRecipe = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             const recipesRef = collection(db, 'recipes');
-            await addDoc(recipesRef, { kitchenUtensils, name, colonialGoods, allergies, urlIdentifier, stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix});
+            await addDoc(recipesRef, { kitchenUtensils, name, colonialGoods, allergies, urlIdentifier, stepOne, stepTwo, stepThree, stepFour, stepFive, stepSix, ingredients});
             setStepOneCurrentSubParagraph('');
             setStepTwoCurrentSubParagraph('');
             setStepThreeCurrentSubParagraph('');
             setStepFourCurrentSubParagraph('');
             setStepFiveCurrentSubParagraph('');
             setStepSixCurrentSubParagraph('');
+            setStepOne({headline: '', image: '', subParagraphs: []});
+            setStepTwo({headline: '', image: '', subParagraphs: []});
+            setStepThree({headline: '', image: '', subParagraphs: []});
+            setStepFour({headline: '', image: '', subParagraphs: []});
+            setStepFive({headline: '', image: '', subParagraphs: []});
+            setStepSix({headline: '', image: '', subParagraphs: []});
             setCurrentSubIngredient('');
+            setCurrentIngredient('');
+            setIngredients({});
             setKitchenUtensils('');
             setName('');
             setColonialGoods('');
             setAllergies('');
             setUrlIdentifier('');
             formRef.current.reset();
-
+    
             console.log('Recipe added successfully!');
         } catch (error) {
             console.error("Error adding document: ", error);
@@ -249,7 +256,7 @@ const AddRecipe = () => {
                                      
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
+                            <button type='button' onClick={addSubParagraphStepOne}>Add Sub Paragraph</button>
                             {stepOne.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
@@ -280,7 +287,7 @@ const AddRecipe = () => {
                                      
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepTwo}>Add Sub Paragraph</button>
+                            <button type='button' onClick={addSubParagraphStepTwo}>Add Sub Paragraph</button>
                             {stepTwo.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
@@ -311,7 +318,7 @@ const AddRecipe = () => {
                                      
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepThree}>Add Sub Paragraph</button>
+                            <button type='button' onClick={addSubParagraphStepThree}>Add Sub Paragraph</button>
                             {stepThree.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
@@ -342,7 +349,7 @@ const AddRecipe = () => {
                                      
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepFour}>Add Sub Paragraph</button>
+                            <button type='button' onClick={addSubParagraphStepFour}>Add Sub Paragraph</button>
                             {stepFour.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
@@ -373,7 +380,7 @@ const AddRecipe = () => {
                                      
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepFive}>Add Sub Paragraph</button>
+                            <button type='button' onClick={addSubParagraphStepFive}>Add Sub Paragraph</button>
                             {stepFive.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
@@ -404,7 +411,7 @@ const AddRecipe = () => {
                                      
                                 />
                             </div>
-                            <button onClick={addSubParagraphStepSix}>Add Sub Paragraph</button>
+                            <button type='button' onClick={addSubParagraphStepSix}>Add Sub Paragraph</button>
                             {stepSix.subParagraphs.map((subParagraph, index) => (
                             <p key={index}>{subParagraph}</p>
                             ))}
@@ -417,15 +424,25 @@ const AddRecipe = () => {
                         <div className="input-row">
                             <input 
                                 type="text" 
+                                value={currentIngredient}
+                                onChange={e => setCurrentIngredient(e.target.value)}
+                                placeholder="Ingredient" 
+                            />
+                            <input 
+                                type="text" 
                                 value={currentSubIngredient}
                                 onChange={e => setCurrentSubIngredient(e.target.value)}
                                 placeholder="Sub Ingredient" 
-                                    
                             />
                         </div>
-                        <button type="button" onClick={addSubIngredient}>Add Sub Ingredient</button>
-                        {ingredients.subIngredients.map((subIngredient, index) => (
-                        <p key={index}>{subIngredient}</p>
+                        <button type="button" onClick={() => addSubIngredient(currentIngredient)}>Add Sub Ingredient</button>
+                        {Object.entries(ingredients).map(([ingredientName, subIngredients], index) => (
+                        <div key={index}>
+                            <h3>{ingredientName}</h3>
+                            {subIngredients.map((subIngredient, subIndex) => (
+                                <p key={subIndex}>{subIngredient}</p>
+                            ))}
+                        </div>
                         ))}
                     </div>
                     <button type="submit">Add Recipe</button>
